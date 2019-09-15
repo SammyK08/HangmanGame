@@ -1,33 +1,73 @@
 const puzzleEL=document.querySelector('#puzzle')
 const guessesEL=document.querySelector('#guesses')  
-const newGame=new Hangman('cat',2)
+let game1
 
 
-console.log(newGame.status)
 
-puzzleEL.textContent=newGame.getPuzzle()
-guessesEL.textContent=newGame.createStatus()
+
+// puzzleEL.textContent=newGame.getPuzzle()
+// guessesEL.textContent=newGame.createStatus()
 
 window.addEventListener('keypress', (e)=>{
 
     const guess=String.fromCharCode(e.charCode)
+    game1.MakingGuess(guess)    
 
-    newGame.MakingGuess(guess)    
+    render()
 
-    puzzleEL.textContent=newGame.getPuzzle()
-    guessesEL.textContent=newGame.createStatus()
 
-    console.log(newGame.status)
+    
    })
 
-   getPuzzle((error,puzzle)=>{
-       if(error){
-        console.log(`Error:${error}`)
-       }else{
-        console.log(puzzle)
-       }
-   })
+   const render=()=>{
+    puzzleEL.textContent=game1.getPuzzle()
+    guessesEL.textContent=game1.createStatus()
+    
+   }
 
-   getCountry('US',(error,country)=>{
-  error?console.log(error):console.log(`Country name:${country.name}`)
-})
+   const startGame=async()=>{
+       const puzzle=await getPuzzle('2')
+       game1=new Hangman(puzzle,5)
+       render()
+   }
+
+   document.querySelector('#reset').addEventListener('click', startGame)
+
+   startGame()
+
+//    getPuzzle('2').then((puzzle)=>{
+//        console.log(puzzle)
+//    },
+//    (err)=>{
+//        console.log(`Error:${err}`)
+//    })
+
+
+//    getCountry('MX').then((country)=>{
+//        console.log(country.name)
+//    }).catch((err)=>{
+//        console.log(`Error:${err}`)
+//    })
+
+//    getLocation().then((location)=>{
+//        return getCountry(location.country)
+//    }).then((country)=>{
+//        console.log(country.name)
+//    }).catch((err)=>{
+//        console.log(`Error:${err}`)
+//    })
+
+//    getEmployeeInfo().then((employee)=>{
+//        employee.forEach(emp=>{
+//         console.log(`${emp.FirstName} ${emp.LastName} is ${emp.Gender}`)
+//        })
+//    }).catch((err)=>{
+//        console.log(`Error:${err}`)
+//    })
+
+   
+//    getCurrentCountry().then((country)=>{
+//        console.log(country.name)
+//    }).catch((error)=>{
+//        console.log(error)
+//    })
