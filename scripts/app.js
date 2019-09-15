@@ -20,8 +20,14 @@ window.addEventListener('keypress', (e)=>{
    })
 
    const render=()=>{
-    puzzleEL.textContent=game1.getPuzzle()
-    guessesEL.textContent=game1.createStatus()
+    puzzleEL.innerHTML=''
+     guessesEL.textContent=game1.createStatus()
+
+    game1.getPuzzle().split('').forEach((letter)=>{
+        const letterEl=document.createElement('span')
+        letterEl.textContent=letter 
+        puzzleEL.appendChild(letterEl)
+    })
     
    }
 
